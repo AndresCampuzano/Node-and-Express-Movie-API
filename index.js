@@ -32,6 +32,7 @@ app.get('/api/movies', (req, res) => {
     res.send(movies);
 });
 
+// Get by genre
 app.get('/api/movies/:genre', (req, res) => {
     const genre = movies.find(m => m.genre === req.params.genre);
     if (!genre) {
@@ -40,6 +41,7 @@ app.get('/api/movies/:genre', (req, res) => {
     res.send(genre);
 });
 
+// Get by genre and id
 app.get('/api/movies/:genre/:id', (req, res) => {
     const genre = movies.find(m => m.genre === req.params.genre);
     const movie = genre.list.find(m => m.id === parseInt(req.params.id));
@@ -47,6 +49,17 @@ app.get('/api/movies/:genre/:id', (req, res) => {
         return res.status(404).send('Movie was now found');
     }
     res.send(movie);
+});
+
+// Delete by genre
+app.delete('/api/movies/:genre', (req, res) => {
+    const genre = movies.find(m => m.genre === req.params.genre);
+    if (!genre) {
+        return res.status(404).send('Genre was now found');
+    }
+    const index = movies.indexOf(genre);
+    movies.splice(index, 1);
+    res.send(genre);
 });
 
 const port = process.env.PORT || 3000;
