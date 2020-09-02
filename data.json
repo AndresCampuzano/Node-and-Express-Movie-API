@@ -1,0 +1,41 @@
+[
+    {
+        "genre": "action",
+        "data": [
+            {
+                "id": 1,
+                "name": "action movie 01"
+            },
+            {
+                "id": 2,
+                "name": "action movie 01"
+            }
+        ]
+    },
+    {
+        "genre": "comedy",
+        "data": [
+            {
+                "id": 1,
+                "name": "comedy movie 01"
+            },
+            {
+                "id": 2,
+                "name": "comedy movie 01"
+            }
+        ]
+    },
+    {
+        "genre": "drama",
+        "data": [
+            {
+                "id": 1,
+                "name": "drama movie 01"
+            },
+            {
+                "id": 2,
+                "name": "drama movie 01"
+            }
+        ]
+    }
+]
