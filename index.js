@@ -62,5 +62,17 @@ app.delete('/api/movies/:genre', (req, res) => {
     res.send(genre);
 });
 
+// Delete by genre and id
+app.delete('/api/movies/:genre/:id', (req, res) => {
+    const genre = movies.find(m => m.genre === req.params.genre);
+    const movie = genre.list.find(m => m.id === parseInt(req.params.id));
+    if (!movie) {
+        return res.status(404).send('Movie was now found');
+    }
+    const index = movies.indexOf(movie);
+    movies.splice(index, 1);
+    res.send(movie);
+});
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}`));
