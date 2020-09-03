@@ -110,6 +110,32 @@ app.post('/api/movies/:genre', (req, res) => {
     res.send(movieToPush);
 });
 
+// Update a genre
+app.put('/api/movies/:genre', (req, res) => {
+    const genre = movies.find(m => m.genre === req.params.genre);
+    if (!genre) {
+        return res.status(404).send('Genre was now found');
+    }
+    const { error } = validateGenre(req.body);
+    if (error) {
+        return res.status(400).send(error.details[0].message);
+    }
+    genre.genre = req.body.genre;
+    res.send(genre);
+});
+
+// Update a movie inside a genre
+app.put('/api/movies/:genre/:id', (req, res) => {
+    const genre = movies.find(m => m.genre === req.params.genre);
+    const { error } = validateMovie(req.body);
+    if (error) {
+        return res.status(400).send(error.details[0].message);
+    }
+    const movie = genre.list.find(m => m.id === parseInt(req.params.id));
+    movie.name = req.body.name;
+    res.send(movie);
+});
+
 // Validation function genre
 function validateGenre(genre) {
     const schema = Joi.object({ genre: Joi.string().min(3).required() });
