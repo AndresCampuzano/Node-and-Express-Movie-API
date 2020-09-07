@@ -3,16 +3,7 @@
 REST API for movies, it can be shorted by genre or id of each movie.
 Using **Joi** for validations.
 
-API structure:
-
-> genre
-> -- list
-> --- movie
-> --- movie
-> genre
-> -- list
-> --- movie
-> --- movie
+## DOCUMENTATION
 
 ### GET
 
