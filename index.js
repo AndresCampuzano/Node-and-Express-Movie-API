@@ -1,7 +1,9 @@
 const Joi = require('joi');
 const express = require('express');
+const cors = require('cors');
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 const movies = [
@@ -9,27 +11,27 @@ const movies = [
         genre: 'action',
         list: [
             {
-                id: Math.floor(Math.random() * 9999999),
+                id: 1,
                 name: 'action movie 01'
             },
-            { id: Math.floor(Math.random() * 9999999), name: 'action movie 02' }
+            { id: 2, name: 'action movie 02' }
         ]
     },
     {
         genre: 'comedy',
         list: [
             {
-                id: Math.floor(Math.random() * 9999999),
+                id: 3,
                 name: 'comedy movie 01'
             },
-            { id: Math.floor(Math.random() * 9999999), name: 'comedy movie 02' }
+            { id: 4, name: 'comedy movie 02' }
         ]
     },
     {
         genre: 'drama',
         list: [
-            { id: Math.floor(Math.random() * 9999999), name: 'drama movie 01' },
-            { id: Math.floor(Math.random() * 9999999), name: 'drama movie 02' }
+            { id: 5, name: 'drama movie 01' },
+            { id: 6, name: 'drama movie 02' }
         ]
     }
 ];
@@ -68,17 +70,17 @@ app.delete('/api/movies/:genre', (req, res) => {
     res.send(genre);
 });
 
-// Delete by genre and id <<<<<<<<<<<<<<<<<<<<<< FIX >>>>>>>>>>>>>>>>>>>>>>>
-// app.delete('/api/movies/:genre/:id', (req, res) => {
-//     const genre = movies.find(m => m.genre === req.params.genre);
-//     const movie = genre.list.find(m => m.id === parseInt(req.params.id));
-//     if (!movie) {
-//         return res.status(404).send('Movie was now found');
-//     }
-//     const index = movies.indexOf(movie);
-//     movies.splice(index, 1);
-//     res.send(movie);
-// });
+// Delete an item inside a genre <<<<<<<<<<<<<<<<<<<<<< FIX >>>>>>>>>>>>>>>>>>>>>>>
+app.delete('/api/movies/:genre/:id', (req, res) => {
+    const genre = movies.find(m => m.genre === req.params.genre);
+    const movie = genre.list.find(m => m.id === parseInt(req.params.id));
+    if (!movie) {
+        return res.status(404).send('Movie was now found');
+    }
+    const index = genre.list.indexOf(movie);
+    genre.list.splice(index, 1);
+    res.send(movie);
+});
 
 // Create a genre
 app.post('/api/movies', (req, res) => {
@@ -148,5 +150,5 @@ function validateMovie(movie) {
     return schema.validate(movie);
 }
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 9000;
 app.listen(port, () => console.log(`Listening on port ${port}`));
